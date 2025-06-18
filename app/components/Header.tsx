@@ -1,32 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-   const [search, setSearch] = useState("");
-   function HandleInput(e: React.ChangeEvent<HTMLInputElement>) {
+   const [searchTerm, setSearchTerm] = useState("");
+   const router = useRouter();
+
+   const handleSearch = (e: React.FormEvent) => {
       e.preventDefault();
-      setSearch(e.target.value);
-      console.log(search);
-   }
-   function HandleClick(e: React.MouseEvent<HTMLButtonElement>) {}
+
+      if (searchTerm.trim()) {
+         router.push(`/todos/${searchTerm.trim()}`);
+      }
+   };
+
    return (
-      <section>
-         <div className=" justify-center mx-auto m-5 border border-blue-400 p-2 rounded-2xl w-150">
+      <header className="flex justify-between items-center p-4 bg-gray-100 w-full shadow-sm">
+         <div className="font-bold text-xl">Your Logo</div>
+
+         <form onSubmit={handleSearch} className="flex gap-2">
             <input
-               className="focus:outline-none w-130 text-sm"
-               value={search}
-               title="SearchBar"
-               onChange={(e) => HandleInput(e)}
+               type="text"
+               value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+               placeholder="Search for a todo"
+               className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-[200px]"
             />
             <button
-               onClick={HandleClick}
-               className="float-right border rounded m-0 pr-1 pl-1"
+               type="submit"
+               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-               {" "}
-               Add{" "}
+               Go
             </button>
-         </div>
-      </section>
+         </form>
+      </header>
    );
 }
