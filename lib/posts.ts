@@ -9,7 +9,7 @@ const components = {
    NewsLetter: NewsLetter,
 };
 
-const GetTodoSlug = async ({ slug }: { slug: string }) => {
+export const GetTodoSlug = async ({ slug }: { slug: string }) => {
    const realSlug = slug.replace(/\.mdx$/, "");
    const filePath = path.join(RootDir, `${realSlug}.mdx`);
    const fileContent = fs.readFileSync(filePath, { encoding: "utf-8" });
@@ -20,10 +20,10 @@ const GetTodoSlug = async ({ slug }: { slug: string }) => {
       options: { parseFrontmatter: true },
    });
 
-   return { content, frontmatter };
+   return { content, frontmatter, slug: realSlug };
 };
 
-export async function GetAllPosts() {
+export const GetAllPost = async () => {
    const files = fs.readdirSync(RootDir);
 
    const posts = [];
@@ -33,6 +33,4 @@ export async function GetAllPosts() {
       posts.push(post);
    }
    return posts;
-}
-
-export default GetTodoSlug;
+};

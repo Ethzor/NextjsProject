@@ -1,4 +1,4 @@
-import GetTodoSlug from "@/lib/posts";
+import { GetTodoSlug } from "@/lib/posts";
 
 const Page = async ({ params }: { params: any }) => {
    const param = await params;

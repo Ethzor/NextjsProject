@@ -1,23 +1,25 @@
 import Link from "next/link";
-import GetAllPosts from "@/lib/posts";
+import { GetAllPost } from "@/lib/posts";
 
 const Page = async () => {
-   const posts: any[] = await GetAllPosts();
+   const posts: any = await GetAllPost();
 
    return (
       <div>
-         <ul>
-            {posts.map((post: any) => {
-               return (
-                  <li key={post.frontmatter.title}>
+         {posts.map((post: any) => (
+            <div
+               key={post.slug}
+               className="mx-auto border rounded w-150 p-5 m-5"
+            >
+               <ul>
+                  <li>
                      <Link href={`/todos/${post.slug}`}>
-                        {" "}
-                        <h4>{post.frontmatter.title}</h4>
+                        {post.frontmatter.title} {post.frontmatter.author}
                      </Link>
                   </li>
-               );
-            })}
-         </ul>
+               </ul>
+            </div>
+         ))}
       </div>
    );
 };
